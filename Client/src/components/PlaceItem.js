@@ -1,4 +1,3 @@
-import deleteMarkerRequest from "../api/deleteMarkerRequest"
 
 export default ({name, handleCountryDelete}) =>{
     return(
