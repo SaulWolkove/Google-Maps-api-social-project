@@ -3,9 +3,9 @@ export default function Info({country, start, end, caption}){
 
     let image
     try{
-        image = require(`./UserImages/${country}/${country}.jpg`)
+        image = require(`../UserImages/${country}/${country}.jpg`)
     } catch{
-        image = require("./UserImages/download.jpg")
+        image = require("../UserImages/download.jpg")
     }
 
     return(
