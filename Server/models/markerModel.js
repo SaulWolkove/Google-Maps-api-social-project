@@ -7,6 +7,7 @@ const markerSchema = new mongoose.Schema({
     start: String,
     end: String,
     caption: String,
+    username: String
 })
 
 const MarkerModel = mongoose.model("Marker", markerSchema);

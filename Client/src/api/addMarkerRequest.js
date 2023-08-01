@@ -10,7 +10,8 @@ export default (newMarker)=>{
             country: newMarker.markerCountry,
             start: newMarker.startDate,
             end: newMarker.endDate,
-            caption: newMarker.caption
+            caption: newMarker.caption,
+            username: newMarker.username
         })
     })
     .then(response=>response.json())

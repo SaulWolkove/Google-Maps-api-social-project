@@ -5,7 +5,8 @@ const cors = require("cors");
 const router = require("./router")
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
-const fs = require("fs")
+const fs = require("fs");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 dotenv.config();
 const app = express();
 
@@ -38,7 +39,8 @@ app.post("/upload", (req,res)=>{
         res.json({fileName: file.name, filePath: `/photoUploads/${file.name}`})
     })
 })
-
+//app.use(notFound)
+//app.use(errorHandler)
 
 app.use(router);
 mongoose.connect(process.env.MONGO_URI).then(()=>{

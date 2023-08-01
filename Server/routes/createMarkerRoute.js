@@ -7,13 +7,15 @@ module.exports = async (req, res) =>{
     const {start}=req.body
     const {end}=req.body
     const {caption}=req.body
+    const {username}=req.body
     const marker = new MarkerModel({
         latitude,
         longitude,
         country,
         start,
         end,
-        caption
+        caption,
+        username
         
         
     })

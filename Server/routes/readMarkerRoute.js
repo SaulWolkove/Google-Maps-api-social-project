@@ -1,6 +1,7 @@
 const MarkerModel = require("../models/markerModel")
 
 module.exports = async (req,res)=>{
-    const markers = await MarkerModel.find();
+    const username= req.query.username
+    const markers = await MarkerModel.find({username: username});
     res.json(markers);
 }

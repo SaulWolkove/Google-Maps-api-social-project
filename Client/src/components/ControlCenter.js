@@ -7,8 +7,7 @@ import {useQueryClient, useMutation} from "react-query";
 
 
 
-export default function ControlCenter({mapRef, markers, isLoading}){
-
+export default function ControlCenter({mapRef, markers, isLoading, user}){
     const queryClient = useQueryClient();
 
     const {mutate: addMarker} = useMutation(
@@ -26,19 +25,16 @@ export default function ControlCenter({mapRef, markers, isLoading}){
             }
         }
     )
-
-    
-        
-
-
-
     return(
         <div>
             <div className="addingPanel">
-            <Places setLocation={(position, country, start, end, caption)=>{
+            <Places 
+            user={user}
+            setLocation={(position, country, start, end, caption, user)=>{
                 mapRef.current?.panTo(position);
                 mapRef.current?.setZoom(4);
-                let newMarker = {latLngLit: position, markerCountry:country, startDate: start, endDate: end, caption: caption}
+                let newMarker = {latLngLit: position, markerCountry:country, startDate: start, endDate: end, caption: caption, username: user}
+                console.log(user)
                 addMarker(newMarker)
             }}/>
             </div>

@@ -7,16 +7,17 @@ import { library } from "../config";
 import Info from "./Info";
 import ControlCenter from "./ControlCenter";
 
+
 export default function Home() {
+  const user = (localStorage.getItem("user"))
   const mapRef = useRef(3);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: library,
   });
-
   const {isLoading, data: markers} = useQuery(
-    'markers', 
-    readMarkerRequest
+    ['markers', user],
+    (user)=>readMarkerRequest(user)
     )
 
   const center = useMemo(() => ({ lat: 24.52043, lng: 15.856743 }), []);
@@ -26,7 +27,7 @@ export default function Home() {
     mapId: "5c60bef575d03ff",})
     ,[])
 
- //ok
+  
  
   const onLoad = useCallback((map)=>(mapRef.current = map), []);
 
@@ -61,7 +62,7 @@ export default function Home() {
         
         <div className="container">
           <div className="control">
-              <ControlCenter mapRef={mapRef} markers={markers} isLoading={isLoading}/>
+              <ControlCenter mapRef={mapRef} markers={markers} isLoading={isLoading} user={user}/>
           </div>
           <GoogleMap
             mapContainerClassName="map-container"

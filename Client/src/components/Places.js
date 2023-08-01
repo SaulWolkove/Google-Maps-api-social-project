@@ -12,7 +12,7 @@ import axios from "axios"
 
 
 
-export default ({setLocation})=>{
+export default ({setLocation, user})=>{
     const {
         ready, 
         value, 
@@ -30,7 +30,7 @@ export default ({setLocation})=>{
         e.preventDefault();
         const results = await getGeocode({address: value});
         const {lat, lng} = await getLatLng(results[0]);
-        setLocation({lat, lng}, value, startDate, endDate, caption)
+        setLocation({lat, lng}, value, startDate, endDate, caption, user)
 
 
         const extention = file.name.split(".").pop();

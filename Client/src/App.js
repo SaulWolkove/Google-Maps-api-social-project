@@ -1,10 +1,27 @@
 import Home from "./components/Home";
+import { Route, Routes, Redirect, Navigate} from "react-router-dom";
+import LoginScreen from "./components/LoginScreen/LoginScreen";
+import RegisterScreen from "./components/RegisterScreen/RegisterScreen";
+import { createContext, useContext, useState} from "react";
 
+export const TokenContext = createContext(null)
+// const ProtectedRoute = ({element}) => {
+//   const [token] = useContext(TokenContext)
+//   return token ? element : <Navigate to="/login"/>
+// }
 
 function App() {
+  const [token,setToken] = useState(null)
+
   return (
     <div>
-      <Home/>
+      <TokenContext.Provider value={[token, setToken]}>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route exact path="/login" element={<LoginScreen/>}/>
+        <Route path="/register" element={<RegisterScreen/>}/>
+      </Routes>
+      </TokenContext.Provider>
     </div>
   );
 }
