@@ -2,10 +2,11 @@ import {useLoadScript, GoogleMap, MarkerF} from "@react-google-maps/api";
 import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import {useQuery} from "react-query";
 import "./styles/map.css"
-import readMarkerRequest from "../api/readMarkerRequest";
+import readTripRequest from "../api/readTripRequest";
 import { library } from "../config";
 import Info from "./Info";
-import ControlCenter from "./ControlCenter";
+import DestinationAdder from "./DestinationAdder";
+import DestinationList from "./DestinationList";
 
 
 export default function Home() {
@@ -15,9 +16,9 @@ export default function Home() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: library,
   });
-  const {isLoading, data: markers} = useQuery(
-    ['markers', user],
-    (user)=>readMarkerRequest(user)
+  const {isLoading, data: trips} = useQuery(
+    ['trips', user],
+    (user)=>readTripRequest(user)
     )
 
   const center = useMemo(() => ({ lat: 24.52043, lng: 15.856743 }), []);
@@ -32,9 +33,9 @@ export default function Home() {
   const onLoad = useCallback((map)=>(mapRef.current = map), []);
 
   const [isHovering, setIsHovering] = useState(false)
-  const handleMouseOver = (marker) => {
+  const handleMouseOver = (trip) => {
     setIsHovering(true)
-    setObservedMarker(marker)
+    setObservedMarker(trip)
   }
   const handleMouseOut = () => {
     setIsHovering(false)
@@ -61,9 +62,8 @@ export default function Home() {
       ) : (
         
         <div className="container">
-          <div className="control">
-              <ControlCenter mapRef={mapRef} markers={markers} isLoading={isLoading} user={user}/>
-          </div>
+          <DestinationAdder mapRef={mapRef} user={user}/>
+          <DestinationList trips={trips} isLoading={isLoading} user={user}/>
           <GoogleMap
             mapContainerClassName="map-container"
             center={center}
@@ -71,14 +71,14 @@ export default function Home() {
             options={options}
             onLoad={onLoad}
             > 
-              {!isLoading && markers.map((marker)=>(
-                <MarkerF position={{lat: marker.latitude,lng: marker.longitude}} key={marker._id} onMouseOver={()=>handleMouseOver(marker)} onMouseOut={handleMouseOut}/>
+              {!isLoading && trips.map((trip)=>(
+                <MarkerF position={{lat: trip.markerLat,lng: trip.markerLng}} key={trip._id} onMouseOver={()=>handleMouseOver(trip)} onMouseOut={handleMouseOut}/>
                 
               ))}
           </GoogleMap>
           {isHovering && (
             <div style={{"position":"absolute","top":(coords.y+100),"left":coords.x-100,"background":"white"}}>
-              <Info country={observedMarker.country} start={observedMarker.start} end={observedMarker.end} caption={observedMarker.caption}/>
+              <Info marker={observedMarker}/>
             </div>
           )}
         </div>

@@ -1,17 +1,18 @@
-export default (newMarker)=>{
+export default (newTrip)=>{
     return fetch(`http://localhost:3001`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            latitude: newMarker.latLngLit.lat,
-            longitude: newMarker.latLngLit.lng,
-            country: newMarker.markerCountry,
-            start: newMarker.startDate,
-            end: newMarker.endDate,
-            caption: newMarker.caption,
-            username: newMarker.username
+            tripLocation: newTrip.markerCountry,
+            markerLat: newTrip.latLngLit.lat,
+            markerLng: newTrip.latLngLit.lng,
+            start: newTrip.startDate,
+            end: newTrip.endDate,
+            caption: newTrip.caption,
+            username: newTrip.username,
+            poi: newTrip.poi
         })
     })
     .then(response=>response.json())
