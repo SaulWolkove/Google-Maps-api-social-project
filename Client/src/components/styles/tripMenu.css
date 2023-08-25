@@ -1,0 +1,25 @@
+.back-button{
+    position:absolute;
+    top: 30px;
+    left: 10px;
+    width: 5%;
+    height: 5%;
+    z-index: 9999;
+    border-radius: 20px;
+    background-color: rgb(58, 33, 148);
+    color:white;
+    font-size: 1.5vw;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+    transition: background-color 0.5s ease;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:clip;
+}
+
+
+
+.back-button:hover{
+    background-color: rgb(37, 21, 97);
+}

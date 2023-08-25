@@ -8,12 +8,12 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css"
 import { useState, Fragment} from "react";
+import "./styles/dashboard.css"
 
 
 
 
-
-export default function POIAdder({handlePOIChange, POI}){
+export default function POIAdder({handlePOIChange, POI, handleKeyPress}){
     const {
         ready, 
         value, 
@@ -34,17 +34,21 @@ export default function POIAdder({handlePOIChange, POI}){
         const {lat, lng} = await getLatLng(results[0]);
         const newPOI = {value, caption, lat, lng}
         handlePOIChange(newPOI)
+        setValue("")
+        setCaption("")
     }
 
 
     return(
-        <div className="container">
+        <div className="poi-adding-form">
+            <div className="poi-title">Add Locations of Interest</div>
             <div className="POIForm">
                 <Combobox onSelect={handlePOISelect}>
                     <ComboboxInput 
                     value={value} 
                     onChange={e=>setValue(e.target.value)} 
-                    className="combobox-input"
+                    className="poi-input"
+                    onKeyPress={handleKeyPress}
                     placeholder="Enter a Location"/>
                     <ComboboxPopover>
                         <ComboboxList>
@@ -52,14 +56,13 @@ export default function POIAdder({handlePOIChange, POI}){
                         </ComboboxList>
                     </ComboboxPopover>
                 </Combobox>
-                <h3>Add a Caption</h3>
-                <input type="text" value={caption} onChange={(e)=>{setCaption(e.target.value)}}/>
-                <button type="button" onClick={handleChange}>Add this point of interest</button>
+                <input className="poi-caption-box" type="text" placeholder="Write a Caption" value={caption} onKeyPress={handleKeyPress} onChange={(e)=>{setCaption(e.target.value)}}/>
+                <button className="poi-submit-button" type="button" onClick={handleChange}>Add</button>
             </div>
-            <div className="POIList">
+            <div className="poi-List">
                 {POI.map((POI)=>{
                     return(
-                        <div key={(Math.random()*100)}>{POI.value} -- {POI.caption}</div>
+                        <div key={(Math.random()*100)} className="poi-item">Location: {POI.value} <br/>Caption: {POI.caption}</div>
                     )
                 })}
             </div>

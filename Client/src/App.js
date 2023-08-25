@@ -3,7 +3,7 @@ import { Route, Routes, Redirect, Navigate} from "react-router-dom";
 import LoginScreen from "./components/LoginScreen/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen/RegisterScreen";
 import { createContext, useContext, useState} from "react";
-
+import Header from "./components/Header"
 export const TokenContext = createContext(null)
 // const ProtectedRoute = ({element}) => {
 //   const [token] = useContext(TokenContext)
@@ -16,6 +16,7 @@ function App() {
   return (
     <div>
       <TokenContext.Provider value={[token, setToken]}>
+        <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route exact path="/login" element={<LoginScreen/>}/>

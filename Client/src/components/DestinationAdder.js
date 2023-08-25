@@ -2,6 +2,7 @@ import { useQueryClient, useMutation } from "react-query";
 import addMarkerRequest from "../api/addMarkerRequest";
 import Places from "./Places";
 import { useState } from "react";
+import "./styles/dashboard.css"
 
 export default function DestinationAdder({mapRef, user}){
 
@@ -14,16 +15,26 @@ export default function DestinationAdder({mapRef, user}){
             }
         }
     )
-    const [formOpen, setFormOpen] = useState(true)
+    const [formOpen, setFormOpen] = useState(false)
 
     const setForm = () =>{
+        if (formOpen){
+            setMessage("Add A Destination")
+        }else{
+            setMessage("Close TripAdder")
+        }
         setFormOpen(!formOpen)
+        
     }
+
+    const [message, setMessage] = useState("Add A Destination")
+
+
     return(
         <div>
-            <button onClick={setForm}>Add A Destination</button>
+            <button onClick={setForm} className="add-button">{message}</button>
             {formOpen && 
-            <div className="addingPanel">
+            <div className="adding-panel">
                 <Places 
                 user={user}
                 setLocation={(position, country, start, end, caption, user, poi)=>{
